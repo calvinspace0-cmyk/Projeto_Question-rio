@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Questionário - Construindo meu Futuro</title>
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<header>
+  <h1>Construindo meu Futuro</h1>
+</header>
+
+<main>
+  <img src="Profissao-definicao.jpg" alt="Decoração" class="decorative">
+
+  <h2>Questionário: escolhas, profissões e projeto de vida</h2>
+
+  <form id="questionario">
+    <div class="question">
+      1. Você já sabe qual profissão deseja seguir?
+      <label><input type="radio" name="q1" value="sim"> Sim</label>
+      <label><input type="radio" name="q1" value="nao"> Não</label>
+    </div>
+
+    <div class="question">
+      2. Você conhece os passos necessários para chegar até essa profissão?
+      <label><input type="radio" name="q2" value="sim"> Sim</label>
+      <label><input type="radio" name="q2" value="nao"> Não</label>
+    </div>
+
+    <div class="question">
+      3. Você já pesquisou sobre vestibulares, cursos técnicos ou faculdades?
+      <label><input type="radio" name="q3" value="sim"> Sim</label>
+      <label><input type="radio" name="q3" value="nao"> Não</label>
+    </div>
+
+    <div class="question">
+      4. Você se sente preparado(a) para escolher uma carreira neste momento?
+      <label><input type="radio" name="q4" value="sim"> Sim</label>
+      <label><input type="radio" name="q4" value="nao"> Não</label>
+    </div>
+
+    <div class="question">
+      5. Você costuma conversar com alguém (professores, família, colegas) sobre seu futuro profissional?
+      <label><input type="radio" name="q5" value="sim"> Sim</label>
+      <label><input type="radio" name="q5" value="nao"> Não</label>
+    </div>
+
+    <div class="question">
+      6. Você sente ansiedade ou preocupação quando pensa sobre seu futuro?
+      <label><input type="radio" name="q6" value="sim"> Sim</label>
+      <label><input type="radio" name="q6" value="nao"> Não</label>
+    </div>
+
+    <div class="question">
+      7. Você acha que a escola ajuda o suficiente na escolha da profissão?
+      <label><input type="radio" name="q7" value="sim"> Sim</label>
+      <label><input type="radio" name="q7" value="nao"> Não</label>
+    </div>
+
+    <div class="question">
+      8. Você utiliza o celular ou a internet para buscar informações sobre carreiras e vestibulares?
+      <label><input type="radio" name="q8" value="sim"> Sim</label>
+      <label><input type="radio" name="q8" value="nao"> Não</label>
+    </div>
+
+    <div class="question">
+      9. Você acredita que cuidar da saúde influencia no seu futuro profissional e pessoal?
+      <label><input type="radio" name="q9" value="sim"> Sim</label>
+      <label><input type="radio" name="q9" value="nao"> Não</label>
+    </div>
+
+    <div class="question">
+      10. Você gostaria de participar de atividades em grupo para pensar sobre seu futuro e profissões?
+      <label><input type="radio" name="q10" value="sim"> Sim</label>
+      <label><input type="radio" name="q10" value="nao"> Não</label>
+    </div>
+
+    <input type="submit" value="Enviar Respostas">
+  </form>
+</main>
+
+<script>
+document.getElementById("questionario").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  let respostas = {};
+  let completo = true;
+
+  for (let i = 1; i <= 10; i++) {
+    let valor = document.querySelector(`input[name="q${i}"]:checked`);
+    if (!valor) {
+      completo = false;
+      break;
+    }
+    respostas[`q${i}`] = valor.value;
+  }
+
+  if (!completo) {
+    alert("⚠️ Por favor, responda todas as perguntas antes de enviar.");
+    return;
+  }
+
+  fetch("https://script.google.com/macros/s/AKfycbxbpUBhAGDdJzqkqGEcb_P3CxWdV6g-tADrbY1FSUH-RTJ9dj_-PpBO-6BqjExv0yf5rw/exec", {
+    method: "POST",
+    body: JSON.stringify(respostas)
+  })
+  .then(res => res.json())
+  .then(data => {
+    alert("✅ Respostas enviadas com sucesso!");
+  })
+  .catch(err => {
+    alert("❌ Erro ao enviar: " + err);
+  });
+});
+</script>
+
+</body>
+</html>
