@@ -81,6 +81,8 @@
   </form>
 </main>
 
+<div id="overlay">⏳ Enviando suas respostas...</div>
+
 <script>
 document.getElementById("questionario").addEventListener("submit", function(e) {
   e.preventDefault();
@@ -102,6 +104,8 @@ document.getElementById("questionario").addEventListener("submit", function(e) {
     return;
   }
 
+  document.getElementById("overlay").style.display = "flex";
+
   fetch("https://script.google.com/macros/s/AKfycbxbpUBhAGDdJzqkqGEcb_P3CxWdV6g-tADrbY1FSUH-RTJ9dj_-PpBO-6BqjExv0yf5rw/exec", {
     method: "POST",
     body: JSON.stringify(respostas)
@@ -109,9 +113,14 @@ document.getElementById("questionario").addEventListener("submit", function(e) {
   .then(res => res.json())
   .then(data => {
     alert("✅ Respostas enviadas com sucesso!");
+    document.getElementById("questionario").reset(); // Limpa as respostas
   })
   .catch(err => {
     alert("❌ Erro ao enviar: " + err);
+  })
+  .finally(() => {
+
+    document.getElementById("overlay").style.display = "none";
   });
 });
 </script>
